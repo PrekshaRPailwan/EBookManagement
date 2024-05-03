@@ -1,0 +1,6 @@
+@EBookManagement_HostAddress = http://localhost:5112
+
+GET {{EBookManagement_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
