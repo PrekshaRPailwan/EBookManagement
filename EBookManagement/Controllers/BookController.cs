@@ -54,7 +54,7 @@ namespace EBookManagement.Controllers
             }
             else
             {
-                return NotFound();
+                return NotFound("Unable");
             }
         }
         [HttpPost]
