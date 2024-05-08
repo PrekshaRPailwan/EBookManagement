@@ -14,5 +14,6 @@ namespace EBookMData.Interface
         public Author AddAuthor(Author author);
         public string UpdateAuthor(int AuthorId, AuthorDto author);
         public string DeleteAuthor(int AuthorId);
+        List<AuthorDto> GetAuthorsByBook(int BookId);
     }
 }
