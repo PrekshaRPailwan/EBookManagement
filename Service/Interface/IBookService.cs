@@ -16,6 +16,7 @@ namespace EBookMData.Interface
         public string DeleteBook(int BookId);
         public BookDto GetByTitle(string title);
         public BookDto AddBookA (BookDto bookDto,List<int> AuthorList);
-
+        public List<BookDto> GetBooksByAuthor(int authorId);
+        List<BookDto> GetBooksByGenre(int GenreId);
     }
 }
