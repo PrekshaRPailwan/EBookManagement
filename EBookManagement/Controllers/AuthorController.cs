@@ -40,5 +40,19 @@ namespace EBookManagement.Controllers
         {
             return Ok(_authorService.DeleteAuthor(AuthorId));
         }
+        [HttpGet("/GetAuthorsByBook")]
+        public ActionResult GetAuthorsByBook(int BookId)
+        {
+            var authors = _authorService.GetAuthorsByBook(BookId);
+            if (authors != null)
+            {
+                return Ok(authors);
+            }
+            else
+            {
+                return NotFound("No authors found for the given book.");
+            }
+        }
+
     }
 }
