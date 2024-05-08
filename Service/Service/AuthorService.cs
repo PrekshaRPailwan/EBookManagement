@@ -70,5 +70,20 @@ namespace Service.Service
 
             }
         }
-    }
+
+            public List<AuthorDto> GetAuthorsByBook(int BookId)
+            {
+                try
+                {
+                    return _databaseManager.GetAuthorsByBook(BookId);
+                }
+                catch (Exception ex)
+                {
+                Console.WriteLine($"Error retrieving authors by book title: {ex.Message}");
+                return null;
+            }
+            }
+        }
+
+    
 }
