@@ -44,7 +44,7 @@ namespace EBookManagement.Controllers
             string delete = _bookService.DeleteBook(BookId);
             return Ok(delete);
         }
-        [HttpGet("GetByTitle")]
+        [HttpGet("/GetByTitle")]
         public IActionResult GetByTitle(string title)
         {
             var book = _bookService.GetByTitle(title);
@@ -64,5 +64,34 @@ namespace EBookManagement.Controllers
             var result = _bookService.AddBookA(bookDto, AuthorList);
             return Ok(result);
         }
+        [HttpGet]
+        [Route("/GetBooksByAuthor")]
+        public IActionResult GetBooksByAuthor(int authorId)
+        {
+            var books = _bookService.GetBooksByAuthor(authorId);
+            if (books != null)
+            {
+                return Ok(books);
+            }
+            else
+            {
+                return NotFound("No books found for the given author.");
+            }
+        }
+        [HttpGet("/GetBooksByGenre")]
+        public IActionResult GetBooksByGenre(int genreId)
+        {
+            var books = _bookService.GetBooksByGenre(genreId);
+            if (books != null)
+            {
+                return Ok(books);
+            }
+            else
+            {
+                return NotFound("No books found for the given genre.");
+            }
+        }
+
+
     }
 }
