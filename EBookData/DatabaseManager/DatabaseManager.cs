@@ -87,5 +87,39 @@ namespace EBookMData.DatabaseManager
             int rowsAffected = command.ExecuteNonQuery();
             return (storedProcedureName);
         }
+        public List<AuthorDto> GetAuthorsByBook(int BookId)
+        {
+            List<AuthorDto> authors = new List<AuthorDto>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string storedProcedureName = "GetAuthorsByBookTitle";
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@BookId", BookId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AuthorDto author = new AuthorDto
+                            {
+                                FirstName = reader.GetString("FirstName"),
+                                LastName = reader.GetString("LastName"),
+                                Biography = reader.GetString("Biography"),
+                                Birthdate = reader.GetDateTime("Birthdate"),
+                                Country = reader.GetString("Country")
+                            };
+                            authors.Add(author);
+                        }
+                    }
+                }
+            }
+
+            return authors;
+        }
+
     }
 }
