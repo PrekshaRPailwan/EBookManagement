@@ -91,10 +91,36 @@ namespace Service.Service
             }
             catch (Exception)
             {
-                throw new Exception();
+                return null;
 
             }
-
         }
+        public List<BookDto> GetBooksByAuthor(int authorId)
+        {
+            try
+            {
+                var book = _dataManagerBook.GetBooksByAuthor(authorId);
+                return book;
+            }
+            catch (Exception)
+            {
+                return null;
+
+            }
+        }
+        public List<BookDto> GetBooksByGenre(int GenreId)
+        {
+            try
+            {
+                return _dataManagerBook.GetBooksByGenre(GenreId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving books by genre: {ex.Message}");
+                return null;
+            }
+        }
+
+
     }
 }
