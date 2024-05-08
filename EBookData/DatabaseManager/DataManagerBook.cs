@@ -229,7 +229,70 @@ namespace EBookMData.DatabaseManager
             }
 
         }
+        public List<BookDto> GetBooksByAuthor(int authorId)
+        {
+            List<BookDto> books = new List<BookDto>();
 
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            connection.Open();
+            string storedProcedureName = "GetBooksByAuthor";
+            SqlCommand command = new SqlCommand(storedProcedureName, connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@AuthorId", authorId);
 
+            using SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                BookDto book = new BookDto();
+
+               // book.BookId = reader.GetInt32("BookId");
+                book.Title = reader.GetString("Title");
+                book.Description = reader.GetString("Description");
+                book.ISBN = reader.GetInt32("ISBN");
+                book.PublicationDate = reader.GetDateTime("PublicationDate");
+                book.Price = reader.GetDecimal("Price");
+                book.Language = reader.GetString("Language");
+                book.Publisher = reader.GetString("Publisher");
+                book.PageCount = reader.GetInt32("PageCount");
+                book.AverageRating = (float)reader.GetDouble("AverageRating");
+                book.GenreId = reader.GetInt32("GenreId");
+                
+                books.Add(book);
+            }
+
+            return books;
+        }
+        public List<BookDto> GetBooksByGenre(int GenreId)
+        {
+            List<BookDto> books = new List<BookDto>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string storedProcedureName = "GetBooksByGenre";
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@GenreId", GenreId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            BookDto book = new BookDto
+                            { 
+                                Title = reader.GetString("Title"),
+                                Description = reader.GetString("Description"),
+                                Price = reader.GetDecimal("Price"),         
+                                GenreId = reader.GetInt32("GenreId")
+                            };
+                            books.Add(book);
+                        }
+                    }
+                }
+            }
+
+            return books;
+        }
     }
 }
